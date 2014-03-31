@@ -2,18 +2,15 @@ package org.homework.entity;
 
 import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * TODO: add comment
+ * Entity that stores connection details.
  */
 @Entity
+@Table(name = "T_CONNECTION")
 public class Connection implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -24,10 +21,13 @@ public class Connection implements Serializable {
 
     private String username;
 
+    @Column(name = "USER_AGENT")
     private String userAgent;
 
+    @Column(name = "CLIENT_IP")
     private String clientIp;
 
+    @Column(name = "CREATION_DATE")
     private Date creationtDate;
 
 

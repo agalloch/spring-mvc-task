@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
+            <outputPatternAsHeader>true</outputPatternAsHeader>
+        </encoder>
+    </appender>
+    
+    <logger name="org.homework" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- 3rdparty Loggers -->
+    <logger name="org.springframework.beans">
+        <level value="warn" />
+    </logger>
+    
+    <logger name="org.springframework.transaction">
+        <level value="warn" />
+    </logger>
+
+    <logger name="org.springframework.orm">
+        <level value="debug" />
+    </logger>
+
+    <logger name="org.springframework.web">
+        <level value="warn" />
+    </logger>
+
+    <logger name="org.apache.http">
+        <level value="warn" />
+    </logger>
+
+    <root level="warn">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
