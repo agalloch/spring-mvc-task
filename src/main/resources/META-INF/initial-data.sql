@@ -1,0 +1,3 @@
+insert into T_CONNECTION (USERNAME, USER_AGENT, CLIENT_IP, CREATION_DATE) values ('wayne', 'Chrome Broken Browser', '10.13.1.25', '2008-08-22');
+insert into T_CONNECTION (USERNAME, USER_AGENT, CLIENT_IP, CREATION_DATE) values ('james', 'Opera Presto engine Woo-hoo!', '123.10.3.126', '2010-01-02');
+insert into T_CONNECTION (USERNAME, USER_AGENT, CLIENT_IP, CREATION_DATE) values ('harry', 'Opera Presto V8 engine', '196.124.1.3', '2011-11-18');

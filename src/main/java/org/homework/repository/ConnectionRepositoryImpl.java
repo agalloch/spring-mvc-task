@@ -2,10 +2,13 @@ package org.homework.repository;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.homework.entity.Connection;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,17 +19,21 @@ import java.util.List;
  * Default implementation of a connection repository.
  */
 public class ConnectionRepositoryImpl implements ConnectionRepository {
-    @PersistenceUnit
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
+
+    @Required
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void save(final Connection connection) {
-        emf.createEntityManager().persist(connection);
+        getSession().persist(connection);
     }
 
     @Override
     public List<Connection> getAllConnections(DateTime lowerBoundaryDate, DateTime upperBoundaryDate) {
-        Session session = (Session)emf.createEntityManager().getDelegate();
+        Session session = getSession();
 
         final Criteria criteria = session.createCriteria(Connection.class);
 
@@ -39,5 +46,9 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 
         List result = criteria.list();
         return result;
+    }
+
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 }
