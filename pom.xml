@@ -17,8 +17,10 @@
         <spring.version>3.2.8.RELEASE</spring.version>
         <hibernate.version>4.2.8.Final</hibernate.version>
         <hsql.version>2.3.2</hsql.version>
+        <commons.dbcp.version>2.0</commons.dbcp.version>
         <javax.servlet.version>2.5</javax.servlet.version>
         <joda.time.version>2.3</joda.time.version>
+        <jstl.version>1.2</jstl.version>
         <slf4j.version>1.7.6</slf4j.version>
         <logback.version>1.1.1</logback.version>
 
@@ -66,11 +68,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -92,11 +89,6 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
 
         <!-- HSQLDB -->
         <dependency>
@@ -105,11 +97,32 @@
             <version>${hsql.version}</version>
         </dependency>
 
+        <!-- Apache Commons connection pool -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${commons.dbcp.version}</version>
+        </dependency>
+
+        <!-- JSTL -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+
         <!-- Joda time -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${joda.time.version}</version>
+        </dependency>
+
+        <!-- Necessary for persisting Joda time with Hibernate -->
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>3.1.0.GA</version>
         </dependency>
 
         <!-- Logging -->

@@ -6,10 +6,9 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,7 +23,7 @@ public class UserTrackingController {
     private ConnectionRepository connectionRepository;
 
 
-    @RequestMapping("/connection")
+    @RequestMapping(value = "/connection", method = RequestMethod.GET, produces = "text/plain")
     public @ResponseBody String trackUser(@RequestHeader("User-Agent") String userAgent,
                                           HttpServletRequest request) {
         final String clientIpAddress = request.getRemoteAddr();
@@ -38,8 +37,17 @@ public class UserTrackingController {
         return logMessage;
     }
 
-    @RequestMapping("/connections-list")
-    public @ResponseBody String searchConnections(@RequestParam(value = "fromDate", required = false) String fromDate,
+    @RequestMapping(value = "/connection/{id}", method = RequestMethod.GET)
+    @Transactional(readOnly = true)
+    public ModelAndView getConnection(@PathVariable("id") Long connectionId) {
+        Connection conn = connectionRepository.find(connectionId);
+
+        return new ModelAndView("singleConnection", "connection", conn);
+    }
+
+    @RequestMapping(value = "/connections-list", method = RequestMethod.GET, produces = "text/plain")
+    @Transactional(readOnly = true)
+    public ModelAndView searchConnections(@RequestParam(value = "fromDate", required = false) String fromDate,
                                                   @RequestParam(value = "toDate", required = false) String toDate) {
 
         final DateTime fromDateObj = (fromDate != null) ? DateTime.parse(fromDate) : null;
@@ -47,7 +55,7 @@ public class UserTrackingController {
 
         List<Connection> connections = connectionRepository.getAllConnections(fromDateObj, toDateObj);
 
-        return connections.size() > 0 ? connections.toString() : "There were not results from your search";
+        return new ModelAndView("connectionsList", "connections", connections);
     }
 
     private Connection createConnection(String userAgent, String clientIpAddress, DateTime connectionDateTime) {
@@ -55,7 +63,7 @@ public class UserTrackingController {
         connection.setClientIp(clientIpAddress);
         connection.setUserAgent(userAgent);
         connection.setUsername("Anonymous");
-        connection.setCreationtDate(connectionDateTime);
+        connection.setCreationDate(connectionDateTime);
         return connection;
     }
 }

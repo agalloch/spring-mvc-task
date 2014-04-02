@@ -21,12 +21,16 @@
         <level value="warn" />
     </logger>
 
-    <logger name="org.springframework.orm">
+    <logger name="org.springframework.ui">
         <level value="debug" />
     </logger>
 
+    <logger name="org.springframework.orm">
+        <level value="warn" />
+    </logger>
+
     <logger name="org.springframework.orm.hibernate4">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <logger name="org.springframework.web">

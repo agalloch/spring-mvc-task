@@ -1,10 +1,10 @@
 package org.homework.entity;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Entity that stores connection details.
@@ -28,7 +28,8 @@ public class Connection implements Serializable {
     private String clientIp;
 
     @Column(name = "CREATION_DATE")
-    private Date creationtDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime creationDate;
 
 
     public void setUsername(String username) {
@@ -43,15 +44,27 @@ public class Connection implements Serializable {
         this.clientIp = clientIp;
     }
 
-    public void setCreationtDate(DateTime creationtDate) {
-        this.creationtDate = creationtDate != null ? creationtDate.toDate() : null;
-    }
-
-    public DateTime getCreationtDate() {
-        return creationtDate != null ? new DateTime(creationtDate) : null;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public String getClientIp() {
+        return clientIp;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(DateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }

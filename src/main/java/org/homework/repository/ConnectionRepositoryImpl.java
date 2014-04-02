@@ -48,6 +48,11 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
         return result;
     }
 
+    @Override
+    public Connection find(Long connectionId) {
+        return (Connection)getSession().get(Connection.class, connectionId);
+    }
+
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }

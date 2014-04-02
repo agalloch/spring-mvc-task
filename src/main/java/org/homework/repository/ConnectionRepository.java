@@ -26,4 +26,12 @@ public interface ConnectionRepository {
      * @return
      */
     public List<Connection> getAllConnections(DateTime fromDate, DateTime toDate);
+
+    /**
+     * Retrieves a specific connection entity by its id.
+     *
+     * @param connectionId
+     * @return
+     */
+    public Connection find(Long connectionId);
 }
