@@ -38,10 +38,10 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
         final Criteria criteria = session.createCriteria(Connection.class);
 
         if (lowerBoundaryDate != null) {
-            criteria.add(Restrictions.ge("creationDate", lowerBoundaryDate.toDate()));
+            criteria.add(Restrictions.ge("creationDate", lowerBoundaryDate));
         }
         if (upperBoundaryDate != null) {
-            criteria.add(Restrictions.le("creationDate", upperBoundaryDate.toDate()));
+            criteria.add(Restrictions.le("creationDate", upperBoundaryDate));
         }
 
         List result = criteria.list();
