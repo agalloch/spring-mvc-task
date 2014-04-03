@@ -39,23 +39,28 @@ public class UserTrackingController {
 
     @RequestMapping(value = "/connection/{id}", method = RequestMethod.GET)
     @Transactional(readOnly = true)
-    public ModelAndView getConnection(@PathVariable("id") Long connectionId) {
+    public String getConnection(@PathVariable("id") Long connectionId, Model model) {
         Connection conn = connectionRepository.find(connectionId);
 
-        return new ModelAndView("singleConnection", "connection", conn);
+        model.addAttribute("connection", conn);
+
+        return "singleConnection";
     }
 
     @RequestMapping(value = "/connections-list", method = RequestMethod.GET, produces = "text/plain")
     @Transactional(readOnly = true)
-    public ModelAndView searchConnections(@RequestParam(value = "fromDate", required = false) String fromDate,
-                                                  @RequestParam(value = "toDate", required = false) String toDate) {
+    public String searchConnections(@RequestParam(value = "fromDate", required = false) String fromDate,
+                                    @RequestParam(value = "toDate", required = false) String toDate,
+                                    Model model) {
 
         final DateTime fromDateObj = (fromDate != null) ? DateTime.parse(fromDate) : null;
         final DateTime toDateObj = (toDate != null) ? DateTime.parse(toDate) : null;
 
         List<Connection> connections = connectionRepository.getAllConnections(fromDateObj, toDateObj);
 
-        return new ModelAndView("connectionsList", "connections", connections);
+        model.addAttribute("connections", connections);
+
+        return "connectionsList";
     }
 
     private Connection createConnection(String userAgent, String clientIpAddress, DateTime connectionDateTime) {
